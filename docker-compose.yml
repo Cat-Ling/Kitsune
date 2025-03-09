@@ -1,0 +1,16 @@
+services:
+  app:
+    image: ghcr.io/cat-ling/kitsune:latest  # Pull the latest image from GHCR
+    container_name: kitsune-app
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - kitsune-network
+
+networks:
+  kitsune-network:
+    driver: bridge
