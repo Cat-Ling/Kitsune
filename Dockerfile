@@ -34,12 +34,15 @@ ENV NODE_ENV=production
 # Add a non-root user for security reasons
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001 -G nodejs
 
-# Copy the necessary build files from the builder stage
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone/ ./standalone
+# Copy only the necessary build files from the builder stage
+#COPY --from=builder /app/public ./public
+#COPY --from=builder /app/.next/standalone/ ./standalone
+#COPY --from=builder /app/.next/static/ ./static
 
-# Copy the static files from /app/static (instead of /app/.next/static/)
-COPY --from=builder /app/static/ ./static
+COPY --from=builder /app/public ./
+COPY --from=builder /app/.next/standalone/ ./
+COPY --from=builder /app/.next/static/ ./
+
 
 # Set correct file permissions (so the nextjs user has access to the files)
 RUN chown -R nextjs:nodejs /app
@@ -54,4 +57,4 @@ EXPOSE 54322
 ENV PORT=54322
 
 # Define the default command to run the application
-CMD ["node", "standalone/server.js"]
+CMD ["node", "./server.js"]
