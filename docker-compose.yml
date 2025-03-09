@@ -4,13 +4,7 @@ services:
     container_name: kitsune-app
     environment:
       - NODE_ENV=production
-      - PORT=3000
+      - PORT=54322
     ports:
-      - "3000:3000"
+      - "54322:54322"
     restart: unless-stopped
-    networks:
-      - kitsune-network
-
-networks:
-  kitsune-network:
-    driver: bridge
